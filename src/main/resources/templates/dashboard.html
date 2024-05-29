@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2037/2037551.png">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Pet Bookings</title>
+</head>
+
+<style>
+    .navbar-brand {
+        color: white !important;
+        font-weight: bold;
+    }
+    table {
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    }
+    th{
+    font-size:14px
+    }
+    
+    td{
+    	font-size:14px
+    }
+    
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa fa-paw" aria-hidden="true"></i> Pet Clinic</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container-fluid">
+            <div class="table-responsive mt-5">
+                <table class="table table-bordered">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th>SI.No</th>
+                            <th>Slot ID</th>
+                            <th>Date and Time</th>
+                            <th>Duration</th>
+                            <th>Service Type</th>
+                            <th>Staff Assigned</th>
+                            <th>Status</th>
+                            <th>Client Id</th>
+                            <th>Client Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Pet Id</th>
+                            <th>Pet Name</th>
+                            <th>Pet Age</th>
+                            <th>Medical History</th>
+                            <th>Pet Microchip</th>
+                            <th>Payment Method</th>
+                            <th>Visiting Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pet, iterStat : ${pets}">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="${pet.slotid}"></td>
+                            <td th:text="${pet.datetime}"></td>
+                            <td th:text="${pet.duration}"></td>
+                            <td th:text="${pet.servicetype}"></td>
+                            <td th:text="${pet.staff}"></td>
+                            <td th:text="${pet.status}"></td>
+                            <td th:text="${pet.clientid}"></td>
+                            <td th:text="${pet.clientname}"></td>
+                            <td th:text="${pet.phone}"></td>
+                            <td th:text="${pet.email}"></td>
+                            <td th:text="${pet.petid}"></td>
+                            <td th:text="${pet.petname}"></td>
+                            <td th:text="${pet.petage}"></td>
+                            <td th:text="${pet.medicalhistory}"></td>
+                            <td th:text="${pet.microchip}"></td>
+                            <td th:text="${pet.paymentmethod}"></td>
+                            <td th:text="${pet.reason}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<link rel="shortcut icon" href="https://png.pngtree.com/element_our/20190530/ourmid/pngtree-pet-icon-image_1267663.jpg">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<title>Book Your Slot</title>
+	<script>
+		// Function to generate a random alphanumeric string of a given length
+		function generateRandomString(length) {
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			let result = '';
+			for (let i = 0; i < length; i++) {
+				result += characters.charAt(Math.floor(Math.random() * characters.length));
+			}
+			return result;
+		}
+
+		// Function to generate a random Slot ID
+		function generateSlotID() {
+			return 'SLT-' + generateRandomString(6);
+		}
+
+		// Function to generate a random Client ID
+		function generateClientID() {
+			return 'CLT-' + generateRandomString(6);
+		}
+
+		// Function to generate a random Pet ID
+		function generatePetID() {
+			return 'PET-' + generateRandomString(6);
+		}
+
+		// Function to get a random availability status
+		function generateAvailabilityStatus() {
+			const statuses = ['Available'];
+			return statuses[Math.floor(Math.random() * statuses.length)];
+		}
+
+		// Function to set random values to specific fields in the form
+		function populateFields() {
+			document.getElementById('slot-id').value = generateSlotID();
+			document.getElementById('client-id').value = generateClientID();
+			document.getElementById('pet-id').value = generatePetID();
+			document.getElementById('availability-status').value = generateAvailabilityStatus();
+		}
+
+		// Call the function to populate fields when the document is ready
+		document.addEventListener('DOMContentLoaded', populateFields);
+	</script>
+</head>
+
+<style>
+	.navbar-brand{
+		color: white !important;
+		font-weight: bold;
+	}
+	form {
+		box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	}
+
+	label {
+		margin-bottom: 5px;
+		color: black;
+		font-weight: 500;
+		font-size: 14px;
+	}
+</style>
+
+<body>
+	<nav class="navbar navbar-expand-sm navbar-light bg-success">
+		<div class="container">
+			<a class="navbar-brand" href="#"><i class="fa fa-paw" aria-hidden="true"></i> Pet Clinic</a>
+
+		</div>
+	</nav>
+	<main>
+		<div class="container p-5">
+		<div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+			<form th:action="@{/register}" th:object="${pet}" method="post" class="form-control p-5">
+				<h4 class="text-center text-success p-2 mb-3" style="font-weight: bolder; font-family: 'Times New Roman', Times, serif;">Book Your Slot</h4>
+				<p class="text text-center text-secondary" style="margin-top: -12px; font-weight: 400;">Save your Pet</p>
+				<br><br>
+				<h6 class="text-success mb-3"><i class="fa fa-star text-warning" aria-hidden="true"></i> Booking Slot Information</h6>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Slot ID</label>
+							<input type="text" th:field="*{slotid}" readonly class="form-control" id="slot-id" required>
+						</div>
+						<div class="mb-3">
+							<label>Date and Time</label>
+							<input type="datetime-local" th:field="*{datetime}"  class="form-control" name="" required>
+						</div>
+						<div class="mb-3">
+							<label>Duration</label>
+							<select th:field="*{duration}" class="form-control form-select" name="" required>
+								<option value="">Select Duration</option>
+								<option value="30min">30 Minutes</option>
+								<option value="45min">45 Minutes</option>
+								<option value="60min">1 Hour</option>
+								<option value="2hr">2 Hours</option>
+								<option value="3hr">3 Hours</option>
+								<option value="4hr">4 Hours</option>
+								<option value="5hr">5 Hours</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Service Type</label>
+							<select th:field="*{servicetype}" class="form-control form-select" name="" required>
+								<option value="">Select Service Type</option>
+								<option value="checkup">General Check-up</option>
+								<option value="vaccination">Vaccination</option>
+								<option value="surgery">Surgery</option>
+								<option value="grooming">Grooming</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label>Staff Assigned</label>
+							<input type="text" th:field="*{staff}" class="form-control" required>
+						</div>
+						<div class="mb-3">
+							<label>Availability Status</label>
+							<input type="text" th:field="*{status}" readonly class="form-control" id="availability-status" required>
+						</div>
+					</div>
+				</div>
+				<br>
+				<h6 class="text-success mb-3 mt-3"><i class="fa fa-star text-warning" aria-hidden="true"></i> Client Information</h6>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Client ID</label>
+							<input type="text" th:field="*{clientid}" readonly class="form-control" id="client-id" required>
+						</div>
+						<div class="mb-3">
+							<label>Client Name</label>
+							<input type="text" th:field="*{clientname}" class="form-control" name="" required>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Phone Number</label>
+							<input type="tel" th:field="*{phone}" class="form-control" required>
+						</div>
+						<div class="mb-3">
+							<label>Email Address</label>
+							<input type="email" th:field="*{email}" class="form-control" required>
+						</div>
+					</div>
+				</div>
+				<br>
+				<h6 class="text-success mb-3 mt-3"><i class="fa fa-star text-warning" aria-hidden="true"></i> Pet Information</h6>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Pet ID</label>
+							<input type="text" th:field="*{petid}" readonly class="form-control" id="pet-id" required>
+						</div>
+						<div class="mb-3">
+							<label>Pet Name</label>
+							<input type="text" th:field="*{petname}" class="form-control" required>
+						</div>
+						<div class="mb-3">
+							<label>Pet Age</label>
+							<input type="number" th:field="*{petage}" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="mb-3">
+							<label>Medical History</label>
+							<input type="text" th:field="*{medicalhistory}" class="form-control" required>
+						</div>
+						<div class="mb-3">
+							<label>Microchip Number</label>
+							<input type="text" th:field="*{microchip}" class="form-control" required>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-6">
+						<h6 class="text-success mb-3 mt-3"><i class="fa fa-star text-warning" aria-hidden="true"></i> Payment Method</h6>
+						<div class="mb-3 mt-1">
+							<label>Payment Method</label> 
+							<select th:field="*{paymentmethod}" class="form-control form-select" name="paymentMethod" required>
+								<option value="">Select Payment Method</option>
+								<option value="creditcard">Credit Card</option>
+								<option value="debitcard">Debit card</option>
+								<option value="upi">UPI</option>
+								<option value="banking">Online Banking</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<h6 class="text-success mb-3 mt-3"><i class="fa fa-star text-warning" aria-hidden="true"></i> Reason For Visit</h6>
+						<div class="mb-3 mt-1">
+							<label>Reason</label>
+							<input type="text" th:field="*{reason}" class="form-control" required>
+						</div>
+					</div>
+				</div>
+				<br>
+				<button class="btn btn-success">Book My Slot</button>
+			</form>
+		</div>
+	</main>
+</body>
+
+</html>
